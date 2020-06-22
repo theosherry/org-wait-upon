@@ -152,7 +152,7 @@ by waiting-id and blocker specified by blocking-id."
       (let* ((files (list (current-buffer)))
              (sources (helm-org-build-sources files nil nil))
              (candidates (--org-wait-upon-gather-org-headings
-                          "LEVEL=1|TODO=\"TODO\"|TODO=\"RECURRING\""
+                          "LEVEL=1|TODO=\"TODO\"|TODO=\"RECURRING\"|TODO=\"WAITING\""
                           t))
              (source-helm (helm-build-sync-source "Wait Upon Candidates"
                             :candidates candidates
