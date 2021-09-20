@@ -10,32 +10,26 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }:
-  let
-    supportedSystems = [ "x86_64-linux" ];
+  flake-utils.lib.simpleFlake {
+    inherit self nixpkgs;
+    name = "org-wait-upon";
     overlay = final: prev: {
-      org-wait-upon = prev.emacsPackagesNg.melpaBuild {
-        pname = "org-wait-upon";
-        ename = "org-wait-upon";
-        version = "0.10";
+      org-wait-upon = {
+        org-wait-upon = prev.emacsPackagesNg.melpaBuild {
+          pname = "org-wait-upon";
+          ename = "org-wait-upon";
+          version = "0.10";
 
-        recipe = builtins.toFile "recipe" ''
-          (org-wait-upon :fetcher github
-          :repo "theosherry/org-wait-upon")
-        '';
-        src = ./org-wait-upon.el;
+          recipe = builtins.toFile "recipe" ''
+            (org-wait-upon :fetcher github
+            :repo "theosherry/org-wait-upon")
+          '';
+          src = ./org-wait-upon.el;
+        };
       };
     };
-  in
-    { inherit overlay; } //
-    flake-utils.lib.eachSystem supportedSystems (system: {
-      defaultPackage = (import nixpkgs {
-        inherit system;
-        overlays = [ overlay ];
-      }).org-wait-upon;
-
-    });
-  }
-
+  };
+}
 
 
 
