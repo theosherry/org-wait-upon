@@ -3,7 +3,7 @@
 
   inputs = {
 
-    nixpkgs.url = "github:NixOS/nixpkgs?rev=bad3ccd099ebe9a8aa017bda8500ab02787d90aa";
+    nixpkgs.url = "github:theosherry/nixpkgs/theo-working";
 
     flake-utils.url = "github:numtide/flake-utils?rev=98c8d36b1828009b20f12544214683c7489935a1";
 
@@ -12,7 +12,7 @@
   outputs = { self, nixpkgs, flake-utils, ... }:
   let
     overlay = final: prev: {
-      emacsPackages.org-wait-upon = prev.emacsPackagesNg.melpaBuild {
+      theoNix.emacsPackages.org-wait-upon = prev.emacsPackagesNg.melpaBuild {
         pname = "org-wait-upon";
         ename = "org-wait-upon";
         version = "0.10";
@@ -30,7 +30,7 @@
           inherit system;
           overlays = [ overlay ];
         };
-        packages = { org-wait-upon = pkgs.emacsPackages.org-wait-upon; };
+        packages = { org-wait-upon = pkgs.theoNix.emacsPackages.org-wait-upon; };
         defaultPackage = packages.org-wait-upon;
       in
         { inherit packages defaultPackage; });
